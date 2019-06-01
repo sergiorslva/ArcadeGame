@@ -60,12 +60,31 @@ Player.prototype.update = function (dt) {
             this.decreaseLive();
         }
 
-        if (this.y === -28) {
-            this.increaseScore();
-            this.resetHero();
+        if (this.y === -28) { 
+            let self = this;                       
+            setTimeout(function(){
+                self.increaseScore();
+                self.resetHero();
+            }, 1000)
         }
     }
 }
+
+Player.prototype.checkGameOver = function(){        
+}
+
+Player.prototype.resetHero = function(){        
+    this.x = this.startX;
+    this.y = this.startY;
+}
+
+ Player.prototype.decreaseLive = function(){
+    //alert('Decrease life')
+ }
+
+ Player.prototype.increaseScore = function(){
+     console.log('increaseScore')
+ }
 
 Player.prototype.handleInput = function (input) {
     switch (input) {
@@ -101,8 +120,9 @@ const bug1 = new Enemy(-101, 0, 200);
 const bug2 = new Enemy(-101, 83, 300);
 const bug3 = new Enemy(252, 83, 300);
 const bug4 = new Enemy(151, 166, 400);
+const bug5 = new Enemy(-30, 166, 400);
 const allEnemies = [];
-allEnemies.push(bug1, bug2, bug3, bug4);
+allEnemies.push(bug1, bug2, bug3, bug4, bug5);
 
 // Place the player object in a variable called player
 const player = new Player();
@@ -120,3 +140,5 @@ document.addEventListener('keyup', function (e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
+
