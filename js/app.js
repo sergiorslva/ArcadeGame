@@ -1,33 +1,18 @@
-// Enemies our player must avoid
-var Enemy = function (x, y, speed) {
-    // Variables applied to each of our instances go here,
-    // we've provided one for you to get started
+// Enemy Class
+var Enemy = function (x, y, speed) {    
     this.x = x;
-    this.y = y + 55;
-    this.step = 101;
-    this.boundry = this.step * 5;
-    this.resetPos = -this.step;
-    this.speed = speed;
-    // The image/sprite for our enemies, this uses
-    // a helper we've provided to easily load images
+    this.y = y + 55;    
+    this.speed = speed;    
     this.sprite = 'images/enemy-bug.png';
 };
 
-// Update the enemy's position, required method for game
-// Parameter: dt, a time delta between ticks
-Enemy.prototype.update = function (dt) {
-    // You should multiply any movement by the dt parameter
-    // which will ensure the game runs at the same speed for
-    // all computers.    
-    if (this.x < this.boundry) {
-        this.x += this.speed * dt;
-    }
-    else {
-        this.x = this.resetPos;
-    }
+Enemy.prototype.update = function (dt) {    
+    this.x += this.speed * dt;
+    if(this.x > 500){
+        this.x = -100;
+    }    
 };
 
-// Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
@@ -39,12 +24,8 @@ var Player = function () {
     this.startX = this.step * 2;
     this.startY = (this.jump * 4) + 55;
     this.x = this.startX;
-    this.y = this.startY;
-    this.victory = false;
-    this.sprite = 'images/char-boy.png';
-    this.live = 5;
-    this.score = 0;
-    this.gameOver = false;
+    this.y = this.startY;    
+    this.sprite = 'images/char-boy.png';    
 }
 
 Player.prototype.render = function () {
@@ -52,9 +33,11 @@ Player.prototype.render = function () {
 }
 
 Player.prototype.update = function (dt) {
+    
     for (let enemy of allEnemies) {
-        if (this.y === enemy.y && (enemy.x + enemy.step / 2 > this.x
-            && enemy.x < this.x + this.step / 2)) {
+        console.log(enemy.y);
+        console.log(this.y);
+        if((this.y === enemy.y) && (this.x === enemy.x)){
             this.checkGameOver();
             this.resetHero();
             this.decreaseLive();
@@ -65,6 +48,20 @@ Player.prototype.update = function (dt) {
             this.resetHero();
         }
     }
+
+    // for (let enemy of allEnemies) {
+    //     if (this.y === enemy.y && (enemy.x + enemy.step / 2 > this.x
+    //         && enemy.x < this.x + this.step / 2)) {
+    //         this.checkGameOver();
+    //         this.resetHero();
+    //         this.decreaseLive();
+    //     }
+
+    //     if (this.y === -28) {
+    //         this.increaseScore();
+    //         this.resetHero();
+    //     }
+    // }
 }
 
 Player.prototype.handleInput = function (input) {
@@ -120,3 +117,8 @@ document.addEventListener('keyup', function (e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
+
+function checkGameOver(){
+    alert('ok');
+}
