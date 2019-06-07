@@ -36,6 +36,9 @@ Player.prototype.render = function () {
 Player.prototype.update = function (dt) {
     
     for (let enemy of allEnemies) {    
+             
+        console.log("Enemy: " + enemy.y);
+        console.log("Player: " + this.y);
 
         if(this.y === enemy.y && (enemy.x >= (this.x - 50) && enemy.x <= (this.x + 50))){                                
             this.checkGameOver();
@@ -43,11 +46,14 @@ Player.prototype.update = function (dt) {
             this.decreaseLive();
         }
 
-        if (this.y === -28) {                                               
-            this.increaseScore();
-            this.resetHero();            
+        if (this.y === -21) { 
+            let self = this;                       
+            setTimeout(function(){
+                self.increaseScore();
+                self.resetHero();
+            }, 100)
         }
-    }
+    }   
 }
 
 Player.prototype.checkGameOver = function(){        
