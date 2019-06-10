@@ -264,6 +264,7 @@ function hideModalGameOver(){
     modal.style.display = "none";
 
     player.resetHero();    
+    self.loadEnemies(1);
 }
 
 function loadEnemies(level){
@@ -272,7 +273,7 @@ function loadEnemies(level){
     
     xOptions = [-100, -200, -300, -400, -500, -600];
     yOptions = [61, 143, 225];
-    speed = level * 200;
+    speed = level * 100;
 
     for(let i = 0; i<= 4; i++){
         var xPos = Math.floor((Math.random() * 6) + 0);
