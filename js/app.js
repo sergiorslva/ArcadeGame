@@ -1,17 +1,19 @@
+const self = this;
+
 // Enemy Class
 var Enemy = function (x, y, speed) {    
     this.x = x;
     this.y = y;    
     this.speed = speed;    
-    this.sprite = 'images/enemy-bug.png';
+    this.sprite = 'images/enemy-bug.png';        
 };
 
-Enemy.prototype.update = function (dt) {    
+Enemy.prototype.update = function (dt) {        
     this.x += this.speed * dt;
 
     if(this.x > 500){
         this.x = -101;
-    }    
+    }            
 };
 
 Enemy.prototype.render = function () {
@@ -48,8 +50,9 @@ Player.prototype.update = function (dt) {
 
 Player.prototype.checkGameOver = function(){      
     if(this.lifes === 0){                
+        document.querySelector('#modal-text').innerHTML = `You got ${player.points} points`;
         const modal = document.getElementById('myModal');
-        modal.style.display = "block";
+        modal.style.display = "block";                
     }  
 }
 
@@ -66,9 +69,15 @@ Player.prototype.resetHero = function(){
  Player.prototype.increaseScore = function(){     
     this.points += 1;
     document.getElementById('points').innerHTML = `Points ${this.points}`;
+    self.loadEnemies(player.points);
  }
 
 Player.prototype.handleInput = function (input) {
+
+    if(player.lifes === 0){
+        return;
+    }
+
     switch (input) {
         case 'left':
             if (this.x > 0) {
@@ -222,18 +231,6 @@ Selector.prototype.handleInput = function(input){
     }    
 }
 
-const bug1 = new Enemy(-100, 61, 200);
-const bug2 = new Enemy(-600, 61, 300);
-const bug3 = new Enemy(-100, 143, 300);
-const bug4 = new Enemy(-100, 225, 400);
-const bug5 = new Enemy(-300, 225, 400);
-
-const allEnemies = [];
-allEnemies.push(bug1, bug2, bug3, bug4, bug5);
-
-const player = new Player();
-const selector = new Selector();
-
 document.addEventListener('keyup', function (e) {
     var allowedKeys = {
         37: 'left',
@@ -247,20 +244,50 @@ document.addEventListener('keyup', function (e) {
     selector.handleInput(allowedKeys[e.keyCode]);
 });
 
-const btnGameOver = document.getElementById("btn-game-over");
-btnGameOver.addEventListener('click', function(){    
-    
+const btnGameOver = document.querySelector("#btn-game-over");
+btnGameOver.addEventListener('click', function(e){            
+    self.hideModalGameOver();        
+});
+
+const buttonCloseModal = document.querySelector('.button-close');
+buttonCloseModal.addEventListener('click', function(){        
+    self.hideModalGameOver();        
+})
+
+function hideModalGameOver(){        
     player.lifes = 3;
     player.points = 0;
-    document.getElementById('lifes').innerHTML = `Lifes  ${player.lifes}`;
-    document.getElementById('points').innerHTML = `Points ${player.points}`;
-
+    document.querySelector('#lifes').innerHTML = `Lifes  ${player.lifes}`;
+    document.querySelector('#points').innerHTML = `Points ${player.points}`;
+    
     const modal = document.getElementById('myModal');
     modal.style.display = "none";
 
-    player.resetHero();
-})
+    player.resetHero();    
+}
+
+function loadEnemies(level){
+    
+    self.allEnemies = [];
+    
+    xOptions = [-100, -200, -300, -400, -500, -600];
+    yOptions = [61, 143, 225];
+    speed = level * 200;
+
+    for(let i = 0; i<= 4; i++){
+        var xPos = Math.floor((Math.random() * 6) + 0);
+        var yPos = Math.floor((Math.random() * 3) + 0);
+    
+        const bug1 = new Enemy(xOptions[xPos], yOptions[yPos], speed);
+    
+        self.allEnemies.push(bug1);
+    }
+}
 
 
+self.allEnemies = [];
+loadEnemies(1);
 
+const player = new Player();
+const selector = new Selector();
 
