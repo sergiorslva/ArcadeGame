@@ -48,12 +48,15 @@ Player.prototype.update = function (dt) {
 
 Player.prototype.checkGameOver = function(){      
     if(this.lifes === 0){
-        alert('Perdeu');
+        
         this.lifes = 3;
 
         this.points = 0;
         document.getElementById('lifes').innerHTML = `Lifes  ${player.lifes}`;
         document.getElementById('points').innerHTML = `Points ${this.points}`;
+
+        const modal = document.getElementById('myModal');
+        modal.style.display = "block";
     }  
 }
 

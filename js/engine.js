@@ -163,10 +163,10 @@ var Engine = (function(global) {
      */
     function reset() {          
 
+        /*Menu screen*/
         const y = 10;
 
-        const canvasMenu = doc.createElement('canvas');
-        
+        const canvasMenu = doc.createElement('canvas');        
         ctxMenu = canvasMenu.getContext('2d');
 
         canvasMenu.width = 505;
@@ -188,8 +188,18 @@ var Engine = (function(global) {
         ctxMenu.drawImage(Resources.get('images/char-horn-girl.png'), 200, y);
         ctxMenu.drawImage(Resources.get('images/char-pink-girl.png'), 300, y);
         ctxMenu.drawImage(Resources.get('images/char-princess-girl.png'), 400, y);
+              
         
-        // noop        
+        // /*Game over screen*/    
+        // const canvasGameOver = doc.createElement('canvas');        
+        // ctxGameOver = canvasGameOver.getContext('2d');
+        
+        // canvasGameOver.id = "canvas-game-over";
+        // canvasGameOver.className = "game-over game-over-hide";
+        // ctxGameOver.fillRect(50, 100, canvasGameOver.width - 100, 30);   
+        // ctxGameOver.id = "btn-game-over";
+        // ctxGameOver.innerHtml("Teste")
+        // doc.body.appendChild(canvasGameOver);             
     }
 
     /* Go ahead and load all of the images we know we're going to need to
