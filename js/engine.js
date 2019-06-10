@@ -24,8 +24,9 @@ var Engine = (function(global) {
         ctx = canvas.getContext('2d'),
         lastTime;
 
-    canvas.width = 505;
-    canvas.height = 606;
+    canvas.width = 0;
+    canvas.height = 0;
+    canvas.id = "canvas-game";
     doc.body.appendChild(canvas);
 
     /* This function serves as the kickoff point for the game loop itself
@@ -46,7 +47,7 @@ var Engine = (function(global) {
          */
         update(dt);
         render();
-
+                
         /* Set our lastTime variable which is used to determine the time delta
          * for the next time this function is called.
          */
@@ -65,7 +66,7 @@ var Engine = (function(global) {
     function init() {
         reset();
         lastTime = Date.now();
-        main();
+        main();               
     }
 
     /* This function is called by main (our game loop) and itself calls all
@@ -93,7 +94,7 @@ var Engine = (function(global) {
         allEnemies.forEach(function(enemy) {
             enemy.update(dt);
         });
-        player.update();
+        player.update();            
     }
 
     /* This function initially draws the "game level", it will then call
@@ -114,7 +115,7 @@ var Engine = (function(global) {
                 'images/grass-block.png',   // Row 1 of 2 of grass
                 'images/grass-block.png'    // Row 2 of 2 of grass
             ],
-            numRows = 6,
+            numRows = 5,
             numCols = 5,
             row, col;
 
@@ -153,15 +154,42 @@ var Engine = (function(global) {
             enemy.render();
         });
 
-        player.render();
+        player.render();                   
     }
 
     /* This function does nothing but it could have been a good place to
      * handle game reset states - maybe a new game menu or a game over screen
      * those sorts of things. It's only called once by the init() method.
      */
-    function reset() {
-        // noop
+    function reset() {          
+
+        const y = 10;
+
+        const canvasMenu = doc.createElement('canvas');
+        
+        ctxMenu = canvasMenu.getContext('2d');
+
+        canvasMenu.width = 505;
+        canvasMenu.height = 606;
+        canvasMenu.id = "canvas-menu";
+        ctxMenu.rect(0, 0, 505, 606);    
+        doc.body.appendChild(canvasMenu);
+        
+        ctxMenu.drawImage(Resources.get('images/grass-block.png'), 1, y);
+        ctxMenu.drawImage(Resources.get('images/grass-block.png'), 100, y);
+        ctxMenu.drawImage(Resources.get('images/grass-block.png'), 200, y);
+        ctxMenu.drawImage(Resources.get('images/grass-block.png'), 300, y);
+        ctxMenu.drawImage(Resources.get('images/grass-block.png'), 400, y);
+
+        selector.render();     
+        
+        ctxMenu.drawImage(Resources.get('images/char-boy.png'), 1, y);
+        ctxMenu.drawImage(Resources.get('images/char-cat-girl.png'), 100, y);
+        ctxMenu.drawImage(Resources.get('images/char-horn-girl.png'), 200, y);
+        ctxMenu.drawImage(Resources.get('images/char-pink-girl.png'), 300, y);
+        ctxMenu.drawImage(Resources.get('images/char-princess-girl.png'), 400, y);
+        
+        // noop        
     }
 
     /* Go ahead and load all of the images we know we're going to need to
@@ -173,7 +201,12 @@ var Engine = (function(global) {
         'images/water-block.png',
         'images/grass-block.png',
         'images/enemy-bug.png',
-        'images/char-boy.png'
+        'images/char-boy.png',
+        'images/char-cat-girl.png',
+        'images/char-horn-girl.png',
+        'images/char-pink-girl.png',
+        'images/char-princess-girl.png',
+        'images/Selector.png'
     ]);
     Resources.onReady(init);
 

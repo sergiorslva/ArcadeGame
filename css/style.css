@@ -1,3 +1,35 @@
+@import url('https://fonts.googleapis.com/css?family=Gloria+Hallelujah&display=swap');
+
 body {
     text-align: center;
+    background: rgb(2,0,36);
+    background: linear-gradient(54deg, rgba(2,0,36,1) 0%, rgba(38,132,152,1) 55%);
+    font-family: 'Gloria Hallelujah', cursive;
+    color: #FFF;
+    overflow: hidden;
+}
+
+#container{
+    height: 100%;
+    top: -10px;
+}
+
+.game-title h2{
+    font-size: 32px;
+}
+
+.menu-hide{
+    display: none;
+}
+
+.score-show{
+    display: block;
+}
+
+.score-hide{
+    display: none;
+}
+
+#points{
+    padding-left: 200px;    
 }
