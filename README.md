@@ -1,7 +1,7 @@
 # Classic Arcade Game
 ***
 
-##Welcome
+## Welcome
 ***
 Welcome to the Classic Arcad Game. In this game you will need reach the top to win. Good luck!
 
