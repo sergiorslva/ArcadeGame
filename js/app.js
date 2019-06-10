@@ -47,14 +47,7 @@ Player.prototype.update = function (dt) {
 }
 
 Player.prototype.checkGameOver = function(){      
-    if(this.lifes === 0){
-        
-        this.lifes = 3;
-
-        this.points = 0;
-        document.getElementById('lifes').innerHTML = `Lifes  ${player.lifes}`;
-        document.getElementById('points').innerHTML = `Points ${this.points}`;
-
+    if(this.lifes === 0){                
         const modal = document.getElementById('myModal');
         modal.style.display = "block";
     }  
@@ -254,6 +247,20 @@ document.addEventListener('keyup', function (e) {
     selector.handleInput(allowedKeys[e.keyCode]);
 });
 
-function generateEnemies(){    
-}
+const btnGameOver = document.getElementById("btn-game-over");
+btnGameOver.addEventListener('click', function(){    
+    
+    player.lifes = 3;
+    player.points = 0;
+    document.getElementById('lifes').innerHTML = `Lifes  ${player.lifes}`;
+    document.getElementById('points').innerHTML = `Points ${player.points}`;
+
+    const modal = document.getElementById('myModal');
+    modal.style.display = "none";
+
+    player.resetHero();
+})
+
+
+
 
