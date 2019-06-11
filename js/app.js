@@ -1,6 +1,50 @@
-const self = this;
+"use strict";
+var Manager = function(){    
+}
 
-// Enemy Class
+/*
+    Class To manager some game functions
+*/
+Manager.prototype.loadEnemies = function(level){
+    
+    const allEnemies = [];
+    
+    const xOptions = [-100, -200, -300, -400, -500, -600];
+    const yOptions = [61, 143, 225];
+    const speed = level * 100;
+
+    for(let i = 0; i<= 4; i++){
+        var xPos = Math.floor((Math.random() * 6) + 0);
+        var yPos = Math.floor((Math.random() * 3) + 0);
+    
+        const bug1 = new Enemy(xOptions[xPos], yOptions[yPos], speed);
+    
+        allEnemies.push(bug1);
+    }
+
+    return allEnemies;
+}
+
+/*
+    Class To manager some game functions
+*/
+Manager.prototype.hideModalGameOver = function(){        
+    player.lifes = 3;
+    player.points = 0;
+    document.querySelector('#lifes').innerHTML = `Lifes  ${player.lifes}`;
+    document.querySelector('#points').innerHTML = `Points ${player.points}`;
+    
+    const modal = document.getElementById('myModal');
+    modal.style.display = "none";
+
+    player.resetHero();    
+    allEnemies = manager.loadEnemies(1);
+}
+
+
+/*
+    Enemy class
+*/
 var Enemy = function (x, y, speed) {    
     this.x = x;
     this.y = y;    
@@ -20,7 +64,9 @@ Enemy.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-//Player Class
+/*
+    Player class
+*/
 var Player = function () {
     this.step = 101;
     this.jump = 82;
@@ -69,7 +115,7 @@ Player.prototype.resetHero = function(){
  Player.prototype.increaseScore = function(){     
     this.points += 1;
     document.getElementById('points').innerHTML = `Points ${this.points}`;
-    self.loadEnemies(player.points);
+    allEnemies = manager.loadEnemies(player.points);
  }
 
 Player.prototype.handleInput = function (input) {
@@ -109,7 +155,9 @@ Player.prototype.handleInput = function (input) {
     }
 }
 
-//Selector Class
+/*
+    Class To manager menu
+*/
 var Selector = function () {    
     this.x = 1;
     this.y = 10;        
@@ -246,49 +294,16 @@ document.addEventListener('keyup', function (e) {
 
 const btnGameOver = document.querySelector("#btn-game-over");
 btnGameOver.addEventListener('click', function(e){            
-    self.hideModalGameOver();        
+    manager.hideModalGameOver();        
 });
 
 const buttonCloseModal = document.querySelector('.button-close');
 buttonCloseModal.addEventListener('click', function(){        
-    self.hideModalGameOver();        
+    manager.hideModalGameOver();        
 })
 
-function hideModalGameOver(){        
-    player.lifes = 3;
-    player.points = 0;
-    document.querySelector('#lifes').innerHTML = `Lifes  ${player.lifes}`;
-    document.querySelector('#points').innerHTML = `Points ${player.points}`;
-    
-    const modal = document.getElementById('myModal');
-    modal.style.display = "none";
-
-    player.resetHero();    
-    self.loadEnemies(1);
-}
-
-function loadEnemies(level){
-    
-    self.allEnemies = [];
-    
-    xOptions = [-100, -200, -300, -400, -500, -600];
-    yOptions = [61, 143, 225];
-    speed = level * 100;
-
-    for(let i = 0; i<= 4; i++){
-        var xPos = Math.floor((Math.random() * 6) + 0);
-        var yPos = Math.floor((Math.random() * 3) + 0);
-    
-        const bug1 = new Enemy(xOptions[xPos], yOptions[yPos], speed);
-    
-        self.allEnemies.push(bug1);
-    }
-}
-
-
-self.allEnemies = [];
-loadEnemies(1);
-
+const manager = new Manager();
+var allEnemies = manager.loadEnemies(1);
 const player = new Player();
 const selector = new Selector();
 
